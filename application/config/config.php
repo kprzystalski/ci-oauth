@@ -367,6 +367,8 @@ $config['proxy_ips'] = '';
 $config['linkedin']['key'] = 'celel67i7pwu';
 $config['linkedin']['secret'] = 'ODWDD1Tp73hSrBbD';
 
+$config['facebook']['key'] = 'your app id goes here';
+$config['facebook']['secret'] = 'your app secret goes here';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

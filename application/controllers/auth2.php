@@ -5,16 +5,16 @@ class Auth2 extends CI_Controller {
     public function session($provider) {
         $this->load->helper('url_helper');
 
-        $this->load->spark('oauth2/0.3.1');
-
+        $this->load->spark('oauth2/0.4.0');
+        $item = $this->config->item($provider);
         $provider = $this->oauth2->provider($provider, array(
-            'id' => 'your-client-id',
-            'secret' => 'your-client-secret',
+            'id' => $item['key'],
+            'secret' => $item['secret'],
                 ));
-
         if (!$this->input->get('code')) {
             // By sending no options it'll come back here
-            $provider->authorize();
+            $url=$provider->authorize();
+             redirect($url);
         } else {
             // Howzit?
             try {
@@ -33,6 +33,8 @@ class Auth2 extends CI_Controller {
                 show_error('That didnt work: ' . $e);
             }
         }
+       
     }
+
 
 }

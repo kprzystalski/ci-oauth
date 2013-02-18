@@ -4,4 +4,5 @@
 </ol>
 <ul>
     <li><a href="/auth/oauth/linkedin">Connect with LinkedIn</a></li>
+    <li><a href="/auth2/session/facebook">Connect with Facebook</a></li>
 </ul>
