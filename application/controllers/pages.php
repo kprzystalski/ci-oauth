@@ -8,13 +8,6 @@ class Pages extends CI_Controller {
             show_404();
         }
 
-//
-//        $this->load->library('codeigniter-ninjauth/ninjauth', array('provider' => 'linkedin'), 'NinjAuthCI');
-//        $this->load->library($this->NinjAuthCI->getLibraryName(), array(), 'cioauth');
-//
-//        die('test');
-//
-
         $data['title'] = ucfirst($page); // Capitalize the first letter
 
         $this->load->view('templates/header', $data);
