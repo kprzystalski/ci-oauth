@@ -5,7 +5,7 @@ class Auth2 extends CI_Controller {
     public function session($provider) {
         $this->load->helper('url_helper');
 
-        $this->load->spark('oauth2/0.3.1');
+        $this->load->spark('oauth2/0.4.0');
 
         $provider = $this->oauth2->provider($provider, array(
             'id' => 'your-client-id',
