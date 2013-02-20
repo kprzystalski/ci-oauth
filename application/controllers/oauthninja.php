@@ -1,57 +1,53 @@
 <?php
 
-class oauth_controller extends CI_Controller {
+class Oauthninja extends CI_Controller {
 
-protected $providers = array(
-		'blooie' 		=> 'OAuth2',
-		'dropbox' 		=> 'OAuth',
-		'facebook' 		=> 'OAuth2',
-		'foursquare' 		=> 'OAuth2',
-		'flickr' 		=> 'OAuth',
-		'google' 		=> 'OAuth2',
-		'github' 		=> 'OAuth2',
-		'linkedin' 		=> 'OAuth',
-		'openid' 		=> 'OpenId',
-		'paypal' 		=> 'OAuth2',
-		'soundcloud' 		=> 'OAuth2',
-		'twitter' 		=> 'OAuth',
-		'windowslive' 		=> 'OAuth2',
-	);
+    protected $providers = array(
+        'blooie' => 'OAuth2',
+        'dropbox' => 'OAuth',
+        'facebook' => 'OAuth2',
+        'foursquare' => 'OAuth2',
+        'flickr' => 'OAuth',
+        'google' => 'OAuth2',
+        'github' => 'OAuth2',
+        'linkedin' => 'OAuth',
+        'openid' => 'OpenId',
+        'paypal' => 'OAuth2',
+        'soundcloud' => 'OAuth2',
+        'twitter' => 'OAuth',
+        'windowslive' => 'OAuth2',
+    );
 
-	public function authorize($provider)
-	{
-		switch ($this->providers[$provider])
-		{
-			case 'OAuth':
-				$this->oauth1($provider);
-				break;
-			case 'OAuth2':
-				$this->oauth2($provider);
-				break;
-			default:
-				throw new Exception('Unsupported provider');
-		}
-	}
+    public function authorize($provider) {
+        switch ($this->providers[$provider]) {
+            case 'OAuth':
+                $this->oauth1($provider);
+                break;
+            case 'OAuth2':
+                $this->oauth2($provider);
+                break;
+            default:
+                throw new Exception('Unsupported provider');
+        }
+    }
 
     public function oauth1($provider) {
         $this->load->helper('url');
 
         $this->load->spark('oauth/0.3.1');
 
-        $key = $this->config->item($provider);
-        $key = $key['key'];
-        $secret = $this->config->item($provider);
-        $secret = $secret['secret'];
+        $item = $this->config->item($provider);
 
-        if (!$key || !$secret) {
-            throw new Exception('Invalid $key or $secret');
+        if (!$item['key'] || !$item['secret']) {
+            throw new Exception('Invalid "key" or "secret"');
         }
 
         // Create an consumer from the config
         $consumer = $this->oauth->consumer(array(
-            'key' => $key,
-            'secret' => $secret,
-                ));
+            'key' => $item['key'],
+            'secret' => $item['secret'],
+                )
+        );
 
         // Load the provider
         $provider = $this->oauth->provider($provider);
@@ -123,8 +119,8 @@ protected $providers = array(
                 ));
         if (!$this->input->get('code')) {
             // By sending no options it'll come back here
-            $url=$provider->authorize();
-             redirect($url);
+            $url = $provider->authorize();
+            redirect($url);
         } else {
             // Howzit?
             try {
@@ -143,8 +139,6 @@ protected $providers = array(
                 show_error('That didnt work: ' . $e);
             }
         }
-       
     }
-
 
 }

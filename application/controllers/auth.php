@@ -7,20 +7,18 @@ class Auth extends CI_Controller {
 
         $this->load->spark('oauth/0.3.1');
 
-        $key = $this->config->item($provider);
-        $key = $key['key'];
-        $secret = $this->config->item($provider);
-        $secret = $secret['secret'];
+        $item = $this->config->item($provider);
 
-        if (!$key || !$secret) {
-            throw new Exception('Invalid $key or $secret');
+        if (!$item['key'] || !$item['secret']) {
+            throw new Exception('Invalid "key" or "secret"');
         }
 
         // Create an consumer from the config
         $consumer = $this->oauth->consumer(array(
-            'key' => $key,
-            'secret' => $secret,
-                ));
+            'key' => $item['key'],
+            'secret' => $item['secret'],
+                )
+        );
 
         // Load the provider
         $provider = $this->oauth->provider($provider);

@@ -24,7 +24,7 @@ if (!function_exists('oauthninja')) {
             throw new Exception(sprintf('There is no strategy for provider "%s"', $provader));
         }
 
-        return '/' . strtolower($providers[$provader]) . '/' . strtolower($providers[$provader]) . '/' . $provader;
+        return '/' . strtolower($providers[$provader]) . '/authorize/' . $provader;
     }
 
 }
